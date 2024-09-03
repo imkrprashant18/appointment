@@ -6,7 +6,8 @@ const port = 8000;
 
 // mongo db connection
 dbConnect();
-
+// middelware
+app.use(express.json());
 // routes
 app.use("/api/v1/user", authRoute);
 app.listen(port, () => {
