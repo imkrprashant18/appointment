@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import Input from "./Input";
 import { ArrowRight } from "lucide-react";
 
 const RegisterForm = () => {
