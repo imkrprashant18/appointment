@@ -9,7 +9,7 @@ export default function Register() {
           <div className="absolute inset-0">
             <img
               className="h-full w-full rounded-lg object-cover object-top"
-              src="https://images.unsplash.com/photo-1526948128573-703ee1aeb6fa?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c2lnbnVwfGVufDB8fDB8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=60"
+              src="https://cdn.pixabay.com/photo/2017/01/31/22/32/cartoon-2027771_1280.png"
               alt=""
             />
           </div>
