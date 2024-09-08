@@ -1,8 +1,11 @@
 import { useState } from "react";
 import Input from "./Input";
 import { ArrowRight } from "lucide-react";
-
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
 const RegisterForm = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -10,9 +13,21 @@ const RegisterForm = () => {
     password: "",
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(e);
+  const handleSubmit = async (data) => {
+    data.preventDefault();
+    try {
+      const res = await axios.post("/api/v1/user/register", formData);
+      if (res.data.success) {
+        navigate("/login");
+        toast.success(res.data.message);
+      } else {
+        toast.error(res.data.message);
+        console.log(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+    }
   };
 
   const handleChange = (e) => {

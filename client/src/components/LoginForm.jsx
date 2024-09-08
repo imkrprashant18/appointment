@@ -1,17 +1,32 @@
 import { useState } from "react";
 import Input from "./Input";
 import { ArrowRight } from "lucide-react";
-
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 const LoginForm = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(e);
+    try {
+      const res = await axios.post("/api/v1/user/login", formData);
+      if (res.data.success) {
+        localStorage.setItem("token", res.data.token);
+        navigate("/");
+        toast.success(res.data.message);
+      } else {
+        toast.error(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+    }
   };
 
   const handleChange = (e) => {
