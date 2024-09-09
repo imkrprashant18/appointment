@@ -38,23 +38,20 @@ const registerController = async (req, res) => {
 // user login
 const loginController = async (req, res) => {
   try {
-    //check if user exist  or not
+    // check the user is exist or not
     const user = await userModel.findOne({ email: req.body.email });
     if (!user) {
-      return res.status(404).send({
+      res.status(201).send({
         success: false,
         message: "User not found",
       });
     }
     // check if password is correct or not
-    const isPasswordMatch = await bcrypt.compare(
-      req.body.password,
-      user.password
-    );
-    if (!isPasswordMatch) {
-      return res.status(500).send({
+    const isMatch = await bcrypt.compare(req.body.password, user.password);
+    if (!isMatch) {
+      return res.status(201).send({
         success: false,
-        message: "Invalid Email or Password",
+        message: "Invalid Credentials",
       });
     }
     // generate token
@@ -76,4 +73,30 @@ const loginController = async (req, res) => {
   }
 };
 
-export { registerController, loginController };
+// user auth
+const authController = async (req, res) => {
+  try {
+    const user = await userModel.findById({ _id: req.body.userId });
+    user.password = undefined;
+    if (!user) {
+      return res.status(200).send({
+        message: "User not found",
+        success: false,
+      });
+    } else {
+      res.status(200).send({
+        success: true,
+        data: user,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Auth error",
+      success: false,
+      error,
+    });
+  }
+};
+
+export { registerController, loginController, authController };

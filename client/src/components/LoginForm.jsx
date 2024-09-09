@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Input from "./Input";
 import { ArrowRight } from "lucide-react";
-import axios from "axios";
+import { API } from "../providers/request";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 const LoginForm = () => {
@@ -15,11 +15,11 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/api/v1/user/login", formData);
+      const res = await API.post("/api/v1/user/login", formData);
       if (res.data.success) {
         localStorage.setItem("token", res.data.token);
-        navigate("/");
         toast.success(res.data.message);
+        navigate("/");
       } else {
         toast.error(res.data.message);
       }
