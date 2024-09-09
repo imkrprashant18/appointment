@@ -4,8 +4,12 @@ import { ArrowRight } from "lucide-react";
 import { API } from "../providers/request";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { showLoading, hideLoading } from "../redux/features/alertSlice";
+import { useDispatch } from "react-redux";
 const LoginForm = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [message, setMessage] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -14,8 +18,16 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (formData.email.length === 0 && formData.password.length === 0) {
+      toast.error("Please enter your email and password");
+      setMessage("Please enter your email and password");
+      return;
+    }
     try {
+      dispatch(showLoading());
       const res = await API.post("/api/v1/user/login", formData);
+      window.location.reload();
+      dispatch(hideLoading());
       if (res.data.success) {
         localStorage.setItem("token", res.data.token);
         toast.success(res.data.message);
@@ -24,6 +36,7 @@ const LoginForm = () => {
         toast.error(res.data.message);
       }
     } catch (error) {
+      dispatch(hideLoading());
       console.log(error);
       toast.error("Something went wrong");
     }
@@ -52,6 +65,7 @@ const LoginForm = () => {
                 onChange={handleChange}
               />
             </div>
+            {message && <p className="text-red-500 text-sm">{message}</p>}
           </div>
           <div>
             <div className="flex items-center justify-between">
@@ -77,6 +91,7 @@ const LoginForm = () => {
                 onChange={handleChange}
               />
             </div>
+            {message && <p className="text-red-500 text-sm">{message}</p>}
           </div>
           <div>
             <button

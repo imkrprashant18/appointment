@@ -4,16 +4,47 @@ import HomePage from "./pages/HomePage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { BrowserRouter } from "react-router-dom";
+import ProtectedRoute from "./routes/ProtectedRoute";
+import PublicRoute from "./routes/publicRoute";
+import Loader from "./components/Loader";
+import { useSelector } from "react-redux";
 function App() {
+  const { loading } = useSelector((state) => state.alerts);
+  console.log("Loading state:", loading);
   return (
     <>
       {/* routing */}
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        </Routes>
+        {loading ? (
+          <Loader />
+        ) : (
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <ProtectedRoute>
+                  <HomePage />{" "}
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                <PublicRoute>
+                  <Login />
+                </PublicRoute>
+              }
+            />
+            <Route
+              path="/register"
+              element={
+                <PublicRoute>
+                  <Register />
+                </PublicRoute>
+              }
+            />
+          </Routes>
+        )}
       </BrowserRouter>
     </>
   );

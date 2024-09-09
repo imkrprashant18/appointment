@@ -12,13 +12,13 @@ dotenv.config();
 app.use(cors());
 
 // OR specify the allowed origins
-app.use(
-  cors({
-    origin: "http://localhost:5173", // Your frontend's origin (Vite dev server)
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true, // If your frontend and backend need to share cookies
-  })
-);
+// app.use(
+//   cors({
+//     origin: "http://localhost:5173", // Your frontend's origin (Vite dev server)
+//     methods: ["GET", "POST", "PUT", "DELETE"],
+//     credentials: true, // If your frontend and backend need to share cookies
+//   })
+// );
 
 // mongo db connection
 dbConnect();

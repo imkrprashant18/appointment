@@ -4,8 +4,12 @@ import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { API } from "../providers/request";
+import { showLoading, hideLoading } from "../redux/features/alertSlice";
+import { useDispatch } from "react-redux";
 const RegisterForm = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [message, setMessage] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -15,8 +19,19 @@ const RegisterForm = () => {
 
   const handleSubmit = async (data) => {
     data.preventDefault();
+    if (
+      formData.name.length === 0 &&
+      formData.email.length === 0 &&
+      formData.password.length === 0
+    ) {
+      toast.error("Please enter your details");
+      setMessage("Please enter your details");
+      return;
+    }
     try {
+      dispatch(showLoading());
       const res = await API.post("/api/v1/user/register", formData);
+      dispatch(hideLoading());
       if (res.data.success) {
         navigate("/login");
         toast.success(res.data.message);
@@ -25,6 +40,7 @@ const RegisterForm = () => {
         console.log(res.data.message);
       }
     } catch (error) {
+      dispatch(hideLoading());
       console.log(error);
       toast.error("Something went wrong");
     }
@@ -53,6 +69,7 @@ const RegisterForm = () => {
                 onChange={handleChange}
               />
             </div>
+            {message && <p className="text-red-500 text-sm">{message}</p>}
           </div>
           <div>
             <label
@@ -69,6 +86,7 @@ const RegisterForm = () => {
                 onChange={handleChange}
               />
             </div>
+            {message && <p className="text-red-500 text-sm">{message}</p>}
           </div>
           <div>
             <div className="flex items-center justify-between">
@@ -94,6 +112,7 @@ const RegisterForm = () => {
                 onChange={handleChange}
               />
             </div>
+            {message && <p className="text-red-500 text-sm">{message}</p>}
           </div>
           <div>
             <button
