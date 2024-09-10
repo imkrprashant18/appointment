@@ -2,16 +2,19 @@ import { useState } from "react";
 import Layout from "../components/Layout";
 import { toast } from "react-toastify";
 import { API } from "../providers/request";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { showLoading, hideLoading } from "../redux/features/alertSlice";
 const Notification = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   // Set "Mark All Read" as the default active tab
   const [activeTab, setActiveTab] = useState("mark");
   // get al notification
   const handleMarkAllRead = async () => {
     try {
+      dispatch(showLoading());
       const res = await API.post(
         "/api/v1/user/get-all-notification",
         {
@@ -23,6 +26,8 @@ const Notification = () => {
           },
         }
       );
+      window.location.reload();
+      dispatch(hideLoading());
       if (res.data.success) {
         console.log(res.data);
         toast.success(res.data.message);
@@ -30,6 +35,7 @@ const Notification = () => {
         toast.error(res.data.message);
       }
     } catch (error) {
+      dispatch(hideLoading());
       console.log(error);
       toast.error("Something went wrong");
     }
@@ -48,6 +54,8 @@ const Notification = () => {
           },
         }
       );
+      window.location.reload();
+
       if (res.data.success) {
         toast.success(res.data.message);
       } else {
@@ -119,7 +127,7 @@ const Notification = () => {
               {user?.seennotification?.map((notificationMessage) => (
                 <>
                   <p
-                    className="text-gray-700"
+                    className="text-gray-200 shadow p-2 rounded-md bg-lime-700"
                     onClick={() => navigate(notificationMessage.onClickPath)}
                   >
                     {notificationMessage.message}

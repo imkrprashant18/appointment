@@ -62,9 +62,13 @@ const ApplyDoctorForm = () => {
       dispatch(hideLoading());
       if (res.data.success) {
         navigate("/");
-        toast.success(res.data.success || "Doctor account has been applied");
+        toast.success(
+          res.data.message || "Doctor account has been applied successfully"
+        );
       } else {
-        toast.error(res.data.success);
+        toast.error(
+          res.data.message || "Application failed. Please try again."
+        );
       }
     } catch (error) {
       dispatch(hideLoading());

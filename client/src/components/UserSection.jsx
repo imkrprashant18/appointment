@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const UserSection = () => {
   const { user } = useSelector((state) => state.user);
-  console.log(user);
+
   const navigate = useNavigate();
 
   // Assuming unread notifications have a flag, for example, "isRead: false"

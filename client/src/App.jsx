@@ -10,6 +10,8 @@ import Loader from "./components/Loader";
 import { useSelector } from "react-redux";
 import ApplyDoctor from "./pages/ApplyDoctor";
 import Notification from "./pages/Notification";
+import UserTable from "./pages/admin/User";
+import Doctor from "./pages/admin/Doctor";
 function App() {
   const { loading } = useSelector((state) => state.alerts);
   console.log("Loading state:", loading);
@@ -42,6 +44,22 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Notification />{" "}
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/users"
+              element={
+                <ProtectedRoute>
+                  <UserTable />{" "}
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/doctors"
+              element={
+                <ProtectedRoute>
+                  <Doctor />{" "}
                 </ProtectedRoute>
               }
             />
