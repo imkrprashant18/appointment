@@ -1,18 +1,25 @@
 import { useSelector } from "react-redux";
 import { Bell } from "lucide-react";
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const UserSection = () => {
   const { user } = useSelector((state) => state.user);
+  console.log(user);
+  const navigate = useNavigate();
 
-  // Using useState to manage unread notifications with a default value of 5
-  const [unreadNotifications, setUnreadNotifications] = useState(5);
+  // Assuming unread notifications have a flag, for example, "isRead: false"
+  const unreadNotifications = user?.notification.length;
 
   return (
     <div className="h-16 w-full flex justify-end items-center pr-8 text-teal-500 shadow bg-white">
       <div className="flex space-x-4 items-center">
         {/* Notification Bell with Badge */}
-        <div className="relative cursor-pointer">
+        <div
+          className="relative cursor-pointer"
+          onClick={() => {
+            navigate("/notification");
+          }}
+        >
           <Bell className="h-6 w-6" />
 
           {/* Notification Badge */}
