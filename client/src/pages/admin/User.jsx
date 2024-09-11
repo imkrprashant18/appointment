@@ -47,7 +47,7 @@ const UserTable = () => {
                   <tr key={index} className="border-b">
                     <td className="p-4">{user.name}</td>
                     <td className="p-4">{user.email}</td>
-                    <td className="p-4">{user.isDoctor ? "Yes" : "No"}</td>
+                    <td className="p-4">{user.isDoctor ? "Doctor" : "No"}</td>
                   </tr>
                 ))}
               </tbody>

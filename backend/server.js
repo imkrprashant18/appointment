@@ -2,25 +2,23 @@ import express from "express";
 import dbConnect from "./config/index.js";
 import authRoute from "./routes/user.route.js";
 import adminRoute from "./routes/admin.route.js";
-import cors from "cors";
+import doctorRoute from "./routes/doctor.route.js";
 import dotenv from "dotenv";
+import cors from "cors";
 const app = express();
 const port = 8000;
 
 // dotenv config
 dotenv.config();
-// Use CORS to allow all origins
-app.use(cors());
 
-// OR specify the allowed origins
-// app.use(
-//   cors({
-//     origin: "http://localhost:5173", // Your frontend's origin (Vite dev server)
-//     methods: ["GET", "POST", "PUT", "DELETE"],
-//     credentials: true, // If your frontend and backend need to share cookies
-//   })
-// );
-
+// handling cors
+// CORS configuration
+const corsOptions = {
+  origin: "*", // Update this to match your frontend's URL
+  methods: "GET,POST,PUT,DELETE",
+  allowedHeaders: "Content-Type,Authorization",
+};
+app.use(cors(corsOptions));
 // mongo db connection
 dbConnect();
 // middelware
@@ -28,6 +26,7 @@ app.use(express.json());
 // routes
 app.use("/api/v1/user", authRoute);
 app.use("/api/v1/admin", adminRoute);
+app.use("/api/v1/doctor", doctorRoute);
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

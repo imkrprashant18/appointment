@@ -117,9 +117,9 @@ const Notification = () => {
               ))}
             </div>
           ) : (
-            <div>
+            <div className="space-y-2">
               <h2
-                className="text-teal-600 cursor-pointer"
+                className="text-teal-600 cursor-pointer "
                 onClick={handleDeleteAllRead}
               >
                 Delete All Read
@@ -127,7 +127,7 @@ const Notification = () => {
               {user?.seennotification?.map((notificationMessage) => (
                 <>
                   <p
-                    className="text-gray-200 shadow p-2 rounded-md bg-lime-700"
+                    className="text-gray-200  shadow p-2 rounded-md bg-lime-700"
                     onClick={() => navigate(notificationMessage.onClickPath)}
                   >
                     {notificationMessage.message}

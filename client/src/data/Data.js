@@ -6,6 +6,7 @@ import {
   Users,
   UserRoundPen,
 } from "lucide-react";
+
 export const iconMap = {
   House,
   Armchair,
@@ -51,24 +52,6 @@ export const adminMenu = [
   {
     name: "Profile",
     path: "/admin/profile",
-    icon: "UserRoundPen",
-  },
-];
-
-export const doctorMenu = [
-  {
-    name: "Home",
-    path: "/",
-    icon: "House",
-  },
-  {
-    name: "Appointments",
-    path: "/doctor/appointments",
-    icon: "Armchair",
-  },
-  {
-    name: "Profile",
-    path: "/doctor/profile",
     icon: "UserRoundPen",
   },
 ];

@@ -1,9 +1,10 @@
 import { Menu, X, LogOut } from "lucide-react";
 import { useState } from "react";
-import { userMenu, iconMap, adminMenu, doctorMenu } from "../data/Data";
+import { userMenu, iconMap, adminMenu } from "../data/Data";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+
 export function SidebarOne() {
   const { user } = useSelector((state) => state.user);
   const [isOpen, setIsOpen] = useState(false);
@@ -17,6 +18,25 @@ export function SidebarOne() {
     toast.success("Logged out successfully");
     console.log("Logout clicked");
   };
+
+  // array for doctor menu
+  const doctorMenu = [
+    {
+      name: "Home",
+      path: "/",
+      icon: "House",
+    },
+    {
+      name: "Appointments",
+      path: "/doctor/appointments",
+      icon: "Armchair",
+    },
+    {
+      name: "Profile",
+      path: `/doctor/profile/${user?._id}`,
+      icon: "UserRoundPen",
+    },
+  ];
 
   // redering menu list
   const SidebarMenu = user?.isAdmin

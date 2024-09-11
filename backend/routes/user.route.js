@@ -6,6 +6,7 @@ import {
   applyDoctor,
   getAllNotification,
   deleteAllNotification,
+  getAllDoctorController,
 } from "../controllers/user.controllers.js";
 import { authMiddleware } from "../middelware/auth.middelware.js";
 
@@ -24,5 +25,7 @@ router.post("/apply-doctor", authMiddleware, applyDoctor);
 router.post("/get-all-notification", authMiddleware, getAllNotification);
 // delete all notification || POST
 router.post("/delete-all-notification", authMiddleware, deleteAllNotification);
+// GET ALL DOCTORS
+router.get("/getAllDoctors", authMiddleware, getAllDoctorController);
 // exporting file
 export default router;
